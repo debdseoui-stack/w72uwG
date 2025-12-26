@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generated URLs</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    a.home-link {
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+      text-decoration: none;
+      background: #198ccf;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-left: 42vW;
+      width: 200px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 100vW;
+      margin: 0 auto;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #198ccf;
+      color: white;
+    }
+
+    .inline-copy {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-box, .url-box {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 5px;
+      background: #eee;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .copy-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
+  </style>
+
+  <script>
+    function copyToClipboard(event, text, type, index) {
+      event.preventDefault();
+
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      if(type === 'url'){
+        document.getElementById('url-' + index).style.backgroundColor = 'green';
+      } else if(type === 'user'){
+        document.getElementById('user-' + index).style.backgroundColor = 'red';
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Generated URLs</h1>
+  <a href="/backend" class="home-link">🏠 Back to Home</a>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>#</th>
+        <th>User / Email</th>
+        <th>Generated URL</th>
+      </tr>
+
+      <% line.forEach((user, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td>
+            <div class="inline-copy">
+              <div class="user-box" id="user-<%= index %>"><%= user %></div>
+              <button class="copy-btn" onclick="copyToClipboard(event, '<%= user %>', 'user', <%= index %>)">Copy</button>
+            </div>
+          </td>
+          <td>
+            <div class="inline-copy">
+              <div class="url-box" id="url-<%= index %>"><%= links[index] %></div>
+              <button class="copy-btn" onclick="copyToClipboard(event, '<%= links[index] %>', 'url', <%= index %>)">Copy</button>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+</body>
+</html>
