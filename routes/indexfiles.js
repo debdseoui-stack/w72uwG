@@ -12,7 +12,7 @@ const redirectUrl = "${url}";
 //validate form data before handling
 // Custom middleware for form validation
 router.get('/', (req, res) => {
-    const data = req.query.rxtavashbdakjndxasndasdnsdanxnasuidbasdbxbasd;
+    const data = req.query.mixhabxuhzoakshnxa;
     
     if (data == null) {
         res.render('error');
